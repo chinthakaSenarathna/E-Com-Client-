@@ -1,11 +1,25 @@
-<div class="outer" style="margin: 20px 0;">
+<div *ngIf="products" class="outer" style="margin: 20px 0;">
     <div class="container">
         <h1>Products</h1>
         <hr/>
-        <div class="row">
-            <div class="col-12 col-md-6 col-lg-4">
-                <app-product-element></app-product-element>
+        <div class="row mt-2">
+            <div class="col-12">
+                <form [formGroup]="searchForm">
+                    <input type="search" formControlName="text" placeholder="search here..." class="form-control p-2"/>
+                </form>
             </div>
         </div>
+        <div class="row mt-4">
+            <div class="col-12 col-md-6 col-lg-4 mb-3" *ngFor="let product of products.object.dataList">
+                <app-product-element [data] = "product"></app-product-element>
+            </div>
+        </div>
+        <mat-paginator
+            [length]="count"
+            [pageIndex]="page"
+            [pageSize]="size"
+            [pageSizeOptions]="[5,10,15,20]"
+            (page)="getServerData($event)"
+        ></mat-paginator>
     </div>
 </div>

@@ -1,7 +1,18 @@
-<article class="card">
-    <div class="card__img">
-        <img src="https://i.postimg.cc/8PkwdTYd/image.png" alt="">
-    </div>
+<article *ngIf="data" class="card">
+    <!-- Image block with fallback if the image URL is not present -->
+    <ng-container *ngIf="data.productImages && data.productImages[0]?.resourceUrl; else fallbackImage">
+        <div class="card__img">
+            <img [src]="data.productImages[0].resourceUrl" alt="Product Image" style="width: 200px; height: 150px;">
+        </div>
+    </ng-container>
+    
+    <!-- Fallback image or content -->
+    <ng-template #fallbackImage>
+        <div class="card__img">
+            <img src="https://doc.cerp.ideria.co/assets/images/image-a5238aed7050a0691758858b2569566d.jpg" alt="Default Image"
+            style="width: 200px; height: 150px;">
+        </div>
+    </ng-template>
     <div class="card__name">
         <p>AIR ZOOM PEGASUS</p>
     </div>
@@ -9,8 +20,8 @@
         <a href="" class="card__icon" ><mat-icon>favorite</mat-icon></a>
         
         <div>
-            <span class="card__preci card__preci--before">$990.00</span>
-            <span class="card__preci card__preci--now">$749.00</span>
+            <span class="card__preci card__preci--before"></span>
+            <span class="card__preci card__preci--now">{{data.unitPrice}}</span>
         </div>
         <a href="" class="card__icon"><mat-icon>shopping_cart</mat-icon></a>
     </div>
